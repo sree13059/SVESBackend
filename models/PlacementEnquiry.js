@@ -50,6 +50,11 @@ const placementEnquirySchema = new mongoose.Schema({
     default: 'Pending',
     enum: ['Pending', 'Under Review', 'Shortlisted', 'Placed', 'Rejected']
   },
+  company: {
+    type: String,
+    trim: true,
+    default: ''
+  },
   package: {
     type: Number,
     default: 0

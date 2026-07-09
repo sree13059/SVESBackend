@@ -11,7 +11,13 @@ const createResult = async (req, res) => {
 
 const getResults = async (req, res) => {
   try {
-    const results = await Result.find().sort({ createdAt: -1 });
+    const filter = {};
+    if (req.query.rollNo) {
+      filter.rollNo = new RegExp('^' + req.query.rollNo.trim() + '$', 'i');
+    }
+    const results = await Result.find(filter)
+      .populate('examinationId')
+      .sort({ createdAt: -1 });
     res.status(200).json(results);
   } catch (err) {
     res.status(500).json({ error: err.message });

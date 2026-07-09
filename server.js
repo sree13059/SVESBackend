@@ -9,6 +9,7 @@ const Leave = require('./models/Leave');
 const Event = require('./models/Event');
 const Student = require('./models/Student');
 const College = require('./models/College');
+const Gallery = require('./models/Gallery');
 
 const admissionRoutes = require('./routes/admissionRoutes');
 const contactRoutes = require('./routes/contactRoutes');
@@ -23,6 +24,7 @@ const examRoutes = require('./routes/examRoutes');
 const facultyRoutes = require('./routes/facultyRoutes');
 const examinationRoutes = require('./routes/examinationRoutes');
 const resultRoutes = require('./routes/resultRoutes');
+const galleryRoutes = require('./routes/galleryRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -453,6 +455,86 @@ async function seedDatabase() {
       ]);
       console.log('Seeded examinations and results successfully.');
     }
+
+    // 8. Seed Gallery Items
+    const galleryCount = await Gallery.countDocuments();
+    if (galleryCount === 0) {
+      console.log('Seeding initial gallery images...');
+      const INITIAL_GALLERY = [
+        {
+          category: 'college',
+          title: 'Sri Veerabhadra Engineering Main Block',
+          src: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          category: 'college',
+          title: 'SVES Degree Campus Courtyard',
+          src: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          category: 'college',
+          title: 'Central Library Study Corridor',
+          src: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          category: 'college',
+          title: 'SVES PG Block & Seminar Plaza',
+          src: 'https://images.unsplash.com/photo-1592280771190-3e2e4d571952?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          category: 'labs',
+          title: 'Advanced Robotics & Machine Learning Lab',
+          src: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          category: 'labs',
+          title: 'Chemistry Organic Analysis Lab',
+          src: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          category: 'labs',
+          title: 'Computer Science Programming Terminal',
+          src: 'https://images.unsplash.com/photo-1564951434112-64d74cc2a2d7?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          category: 'labs',
+          title: 'Biology Microscope Research Room',
+          src: 'https://images.unsplash.com/photo-1518152006812-edab29b069ac?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          category: 'sports',
+          title: 'Inter-Institution Basketball Finals',
+          src: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          category: 'sports',
+          title: 'Annual Track & Field Sprint Meet',
+          src: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          category: 'sports',
+          title: 'NSS Outdoor Athletics Training',
+          src: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          category: 'cultural',
+          title: 'Annual Stage Play Drama Fest',
+          src: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          category: 'cultural',
+          title: 'Acoustic Guitar & Band Performance',
+          src: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+          category: 'cultural',
+          title: 'Fine Arts & Painting Exhibition',
+          src: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=800'
+        }
+      ];
+      await Gallery.insertMany(INITIAL_GALLERY);
+      console.log('Seeded gallery images successfully.');
+    }
   } catch (error) {
     console.error('Error seeding database:', error.message);
   }
@@ -521,6 +603,7 @@ app.use('/api/examinations', examRoutes);
 app.use('/api/faculty-applications', facultyRoutes);
 app.use('/api/exam-schedules', examinationRoutes);
 app.use('/api/exam-results', resultRoutes);
+app.use('/api/gallery', galleryRoutes);
 
 // Start Server
 app.listen(PORT, () => {

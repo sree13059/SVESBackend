@@ -48,7 +48,11 @@ const placementEnquirySchema = new mongoose.Schema({
   status: {
     type: String,
     default: 'Pending',
-    enum: ['Pending', 'Under Review', 'Shortlisted', 'Rejected']
+    enum: ['Pending', 'Under Review', 'Shortlisted', 'Placed', 'Rejected']
+  },
+  package: {
+    type: Number,
+    default: 0
   },
   createdAt: {
     type: Date,
